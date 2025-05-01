@@ -11,7 +11,7 @@ async function verifyUser(req) {
 }
 
 async function fireSet(collection, subcollection, values, uid) {
-    const ref = db.collection(collection).doc(uid).collection(subcollection);
+    const ref = db.collection(collection).doc(uid).collection(subcollection).doc('data');
     await ref.set(values);
 }
 
