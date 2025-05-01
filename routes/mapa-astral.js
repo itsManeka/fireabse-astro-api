@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { db, admin } = require('../firebase');
+const { db, admin, auth } = require('../firebase');
 const astrolink = require('@itsmaneka/astrolink');
 
 async function verifyUser(req) {
@@ -10,9 +10,14 @@ async function verifyUser(req) {
     return decoded.uid;
 }
 
-async function setDocument(document, values, uid) {
-    const ref = doc(db, document, uid);
-    await ref.setDoc(values);
+async function fireSet(collection, values, uid) {
+    const ref = db.doc(`${collection}/${uid}`);
+    await ref.set(values);
+}
+
+async function fireAdd(collection, subcollection, values, uid) {
+    const ref = db.collection(collection).doc(uid).collection(subcollection);
+    await ref.add(values);
 }
 
 router.post("/calcular", async (req, res) => {
@@ -29,7 +34,7 @@ router.post("/calcular", async (req, res) => {
 
         const mapa = await astrolink.calcularMapaAstral({ date, time, lat, lng, name });
 
-        setDocument("mapa_astral", {
+        fireSet("mapa_astral", {
             date,
             time,
             lat,
@@ -39,7 +44,7 @@ router.post("/calcular", async (req, res) => {
             createdAt: admin.firestore.FieldValue.serverTimestamp()
         }, uid);
 
-        setDocument('notificacoes', {
+        fireAdd('users', 'notifications', {
             message: `O seu mapa astral foi calculado com sucesso.`,
             status: 'success',
             createdAt: admin.firestore.FieldValue.serverTimestamp()
@@ -48,7 +53,7 @@ router.post("/calcular", async (req, res) => {
     } catch (e) {
         console.error('Erro ao calcular mapa astral:', e);
 
-        setDocument('notificacoes', {
+        fireAdd('users', 'notifications', {
             message: 'Ocorreu um erro ao calcular seu mapa astral.',
             status: 'error',
             error: e.message,
