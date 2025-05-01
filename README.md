@@ -50,7 +50,6 @@ Firebase Astro API é uma API construída com Node.js e Express que utiliza o Fi
    ```bash
    npm install  
    ```
-   ```
 
 3. Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis de ambiente:
 
@@ -64,29 +63,7 @@ Firebase Astro API é uma API construída com Node.js e Express que utiliza o Fi
 
 - Certifique-se de que o arquivo `.env` está listado no `.gitignore` para evitar o upload de credenciais sensíveis.
 
-4. Configure o Firebase:  
-    - Crie um arquivo `firebase.js` na pasta `src` com as credenciais do Firebase.  
-    - Exemplo de configuração:
-
-    ```javascript
-    require('dotenv').config()
-
-    const admin = require('firebase-admin');
-
-    admin.initializeApp({
-        credential: admin.credential.cert({
-            projectId: process.env.FIREBASE_PROJECT_ID,
-            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-            privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-        }),
-    });
-
-    const db = admin.firestore();
-
-    module.exports = { admin, db };
-    ```
-
-5. Inicie o servidor:
+4. Inicie o servidor:
 
     ```bash
     npm start  
@@ -98,6 +75,9 @@ Firebase Astro API é uma API construída com Node.js e Express que utiliza o Fi
 
 - **Método**: `POST`  
 - **Descrição**: Inicia o cálculo de um mapa astral e retorna uma resposta imediata. O cálculo é processado de forma assíncrona, e os resultados são armazenados no Firestore.  
+
+- **Headers**:  
+  `Authorization: Bearer <token>`
 
 #### Parâmetros esperados no corpo da requisição (`JSON`):
 
@@ -112,15 +92,16 @@ Firebase Astro API é uma API construída com Node.js e Express que utiliza o Fi
 #### Exemplo de requisição:
 
 ```bash
-curl -X POST http://localhost:3000/calcular \  
--H "Content-Type: application/json" \  
--d '{  
-  "date": "1990-01-01",  
-  "time": "12:00:00",  
-  "lat": -23.5505,  
-  "lng": -46.6333,  
-  "name": "João"  
-}'  
+curl -X POST http://localhost:3000/calcular \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer <seu-token-de-autenticacao>" \
+-d '{
+  "date": "1990-01-01",
+  "time": "12:00:00",
+  "lat": -23.5505,
+  "lng": -46.6333,
+  "name": "João"
+}'
 ```
 
 #### Resposta:
