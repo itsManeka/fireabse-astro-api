@@ -10,8 +10,8 @@ async function verifyUser(req) {
     return decoded.uid;
 }
 
-async function fireSet(collection, values, uid) {
-    const ref = db.doc(`${collection}/${uid}`);
+async function fireSet(collection, subcollection, values, uid) {
+    const ref = db.collection(collection).doc(uid).collection(subcollection);
     await ref.set(values);
 }
 
@@ -34,7 +34,7 @@ router.post("/calcular", async (req, res) => {
 
         const mapa = await astrolink.calcularMapaAstral({ date, time, lat, lng, name });
 
-        fireSet("mapa_astral", {
+        fireSet('users', 'mapa_astral', {
             date,
             time,
             lat,
