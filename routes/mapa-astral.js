@@ -45,7 +45,8 @@ router.post("/calcular", async (req, res) => {
         }, uid);
 
         fireAdd('users', 'notifications', {
-            message: `O seu mapa astral foi calculado com sucesso.`,
+            title: 'Mapa astral',
+            message: 'O cálculo do seu mapa astral está pronto, acesse o menu Astrologia pra visualizar o resultado.',
             read: false,
             createdAt: admin.firestore.FieldValue.serverTimestamp()
         }, uid);
@@ -54,7 +55,8 @@ router.post("/calcular", async (req, res) => {
         console.error('Erro ao calcular mapa astral:', e);
 
         fireAdd('users', 'notifications', {
-            message: 'Ocorreu um erro ao calcular seu mapa astral.',
+            title: 'Mapa astral',
+            message: 'Ocorreu um erro ao calcular seu mapa astral, tente novamente mais tarde.',
             read: false,
             createdAt: admin.firestore.FieldValue.serverTimestamp()
         }, uid);
