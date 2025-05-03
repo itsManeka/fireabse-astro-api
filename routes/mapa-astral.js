@@ -46,7 +46,7 @@ router.post("/calcular", async (req, res) => {
 
         fireAdd('users', 'notifications', {
             message: `O seu mapa astral foi calculado com sucesso.`,
-            status: 'success',
+            read: false,
             createdAt: admin.firestore.FieldValue.serverTimestamp()
         }, uid);
 
@@ -55,8 +55,7 @@ router.post("/calcular", async (req, res) => {
 
         fireAdd('users', 'notifications', {
             message: 'Ocorreu um erro ao calcular seu mapa astral.',
-            status: 'error',
-            error: e.message,
+            read: false,
             createdAt: admin.firestore.FieldValue.serverTimestamp()
         }, uid);
     }
