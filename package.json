@@ -1,16 +1,44 @@
 {
   "name": "firebase-astro-api",
   "version": "1.0.0",
+  "description": "API REST robusta para cálculo de mapas astrais com Firebase Firestore e autenticação segura",
   "main": "index.js",
+  "keywords": [
+    "api",
+    "astrology",
+    "firebase",
+    "firestore",
+    "express",
+    "nodejs",
+    "astral-chart",
+    "authentication",
+    "rest-api"
+  ],
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "echo \"Linting not configured\"",
+    "health": "curl http://localhost:3000/health || echo \"Server not running\""
   },
   "engines": {
-    "node": "18"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
-  "author": "Emanuel Ozorio",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itsManeka/firebase-astro-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/itsManeka/firebase-astro-api/issues"
+  },
+  "homepage": "https://github.com/itsManeka/firebase-astro-api#readme",
+  "author": {
+    "name": "Emanuel Ozorio",
+    "email": "emanuel.ozoriodias@gmail.com",
+    "url": "https://github.com/itsManeka"
+  },
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "@itsmaneka/astrolink": "^1.2.2",
     "cors": "^2.8.5",
@@ -18,5 +46,8 @@
     "express": "^5.1.0",
     "firebase-admin": "^13.3.0",
     "node-fetch": "^3.3.2"
-  }
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "peerDependencies": {}
 }
